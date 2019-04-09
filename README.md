@@ -12,11 +12,11 @@ The workflows below rely on a few assumptions.  The first assumption is that Git
 ## Basic Dev Setup
 The basic idea is that each developer effectively works in their own “silo”, in which they set up their own local git repositories, local AppStudio applications, and their own items in their ArcGIS Online organization.  The only shared resource in the development stage should be a git repository.
 
->> Insert dev setup image here
+![Developer setup high level][DevSetup]
 
 Each developer signs into AppStudio using their developer-licensed account and creates a new unregistered app for dev and testing purposes only.  The project code is copied into the local AppStudio app directory each time the application needs to be built in the could for testing.  There will exist only one registered “master” application in the main ArcGIS Online Organization, which has a unique app id.  Each developer’s unregistered local app will use the master app’s app id as the client_id parameter in the project’s appinfo.json file.  Every time the app runs and is authenticated against the main organization, it will give the master client_id and ArcGIS online will treat it as the “master” application.  
 
->> Insert app registration image here 
+![Registration details][Registration]
 
 The setup steps are as follows:
 #### Create a registered app one time in ArcGIS Online or Enterprise:
@@ -60,7 +60,7 @@ Because all the project code lives in the local git directory, the AppStudio app
         i.	All files **except** `iteminfo.json`
 2.	Run, upload, and cloud make in AppStudio
 
->> Insert detailed developer view here
+![Developer detail][DevDetail]
 
 As you can see, all of the project files from the git repository are copied into the local AppStudio app’s location, except the iteminfo.json.  This is because the iteminfo.json file is specific to that local AppStudio item.  Most app-specific information and settings will be located in appinfo.json, which should be shared via version control and should be the same across all developers’ applications (so that they all have the same app settings and client_id).
 
@@ -74,8 +74,9 @@ This copying and pasting process can get tedious, especially if you make frequen
 ## Team Workflows
 Now that all developers are set up, there are a few possible configurations to consider for deployment.  Configurations 1 & 2 highlight the fact that it does not matter whether developers are licensed within the same organization, and consequently where their dev versions of the app live.  This is because each developer’s workflow is “siloed”, and not dependent on the organization to which they belong.  For deployment, both configurations require the final build to be built by any user and copied to a designated location for distribution. 
 
->> Insert config 1 image here
->> Insert config 2 image here
+![Configuration 1][Conf1]
+
+![Configuration 2][Conf2]
 
 For both configurations 1 & 2:
 1.	The developer performs the development setup steps above
@@ -89,7 +90,7 @@ This build process has some potential drawbacks:
 
 Configuration 3 solves these issues by adding one more “master” account which exists solely to curate the “master” app build item in the organization.  This “master” account owns a separate developer license through your organization.  Its credentials can optionally be shared among developers so that anyone can build to the final “master” application when needed.  As we saw before, the location of a developer’s licensing is negligible once the app is built and run with the master’s client_id.
 
->> Insert config 3 image here
+![Configuration 3][conf3]
 
 When a master build is needed, one developer will:
 1.	Log out of AppStudio if signed into personal dev account
@@ -111,3 +112,11 @@ With configuration 3, one final and “master” app exists in the ArcGIS organi
 |Extra user / license needed|**no**|**no**|yes|
 
 All scenarios have one “master” item in ArcGIS Online which is registered with an App Id for licensing and authentication purposes.  
+
+
+[DevSetup]: https://github.com/cmosnick/appstudio-multiple-developers/blob/master/DeveloperSetup.jpg
+[DevDetail]: https://github.com/cmosnick/appstudio-multiple-developers/blob/master/DevDetail.jpg
+[Conf1]: https://github.com/cmosnick/appstudio-multiple-developers/blob/master/conf1.jpg
+[Conf2]: https://github.com/cmosnick/appstudio-multiple-developers/blob/master/Conf2.jpg
+[Conf3]: https://github.com/cmosnick/appstudio-multiple-developers/blob/master/Conf3.jpg
+[Registration]: https://github.com/cmosnick/appstudio-multiple-developers/blob/master/Registrations12.jpg
